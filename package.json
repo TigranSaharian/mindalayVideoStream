@@ -1,0 +1,23 @@
+{
+  "name": "mindalayvideostream",
+  "version": "1.0.0",
+  "description": "many to many video streaming using WebRTC technology",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TigranSaharian/mindalayVideoStream.git"
+  },
+  "keywords": [
+    "video",
+    "streaming"
+  ],
+  "author": "Tigran Saharyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TigranSaharian/mindalayVideoStream/issues"
+  },
+  "homepage": "https://github.com/TigranSaharian/mindalayVideoStream#readme"
+}
