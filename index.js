@@ -2,6 +2,7 @@
 function mindalayVideoStream(options){
     let socketIo = document.createElement('script').src = 'https://vs.mindalay.com/socket.io/socket.io.js';
     document.body.append(socketIo);
+    
     var connection = new RTCMultiConnection();
 
     connection.socketURL = 'https://vs.mindalay.com/';
