@@ -4,14 +4,14 @@ many to many video streaming
 
 # Instolation
 
-`npm i m-videostream`
+`npm i mindalayvideostream --save`
 
-Then...
+# Inital function
 
 ```
-import { mindalayVideoStream } from 'mindalayVideoStream';
+import { __InitConnection, __openOrJoin } from "mindalayvideostream"
 
-mindalayVideoStream({
+__InitConnection({
     roomId: 'roomid_123',
     videoContainer: 'myVideoContainerInBody',
     isAudio: true,
@@ -20,9 +20,22 @@ mindalayVideoStream({
     videoHeight: 1080,
     frameRate: 30,
     videoControls: [
-        'mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'
+        'mute-audio',
+        'mute-video',
+        'full-screen',
+        'volume-slider',
+        'stop'
     ]
 });
+
+this function setup videoconnection
+```
+
+# Button for join or open the room
+```
+__openOrJoin('open-or-join-button-id-name');
+
+create any button and take the id
 ```
 
 ## Options
