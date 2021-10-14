@@ -4,7 +4,7 @@ many to many video streaming
 
 # Instolation
 
-`npm i mindalayvideostream`
+`npm i m-videostream`
 
 Then...
 

@@ -1,6 +1,11 @@
 
+import RTCMultiConnection from "./dist/RTCMulticonnection";
+import getHTMLMediaElement from "./dist/getHTMLMediaElement";
+
 function mindalayVideoStream(options){
-    let socketIo = document.createElement('script').src = 'https://vs.mindalay.com/socket.io/socket.io.js';
+    let socketIo = document.createElement('script')
+    socketIo.src = 'https://vs.mindalay.com/socket.io/socket.io.js';
+    socketIo.defer = true;
     document.body.append(socketIo);
     
     var connection = new RTCMultiConnection();
