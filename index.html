@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+    <!-- <script src="/index.js"></script> -->
+    <script  type="module" src="/dist/RTCMulticonnection.js"></script>
+    <script src="/lib/index.js"></script>
+    <script>
+        var a = mindalayVideoStream({
+            roomId: 'roomid_123',
+            videoContainer: container,
+            isAudio: true,
+            isVideo: true,
+            videoWidth: 350,
+            videoHeight: 200,
+            frameRate: 18,
+            videoControls: [
+                'mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'
+            ]
+        })
+    </script>
+</body>
+</html>
