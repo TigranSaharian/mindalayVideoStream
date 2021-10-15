@@ -19,13 +19,7 @@ __InitConnection({
     videoWidth: 1920,
     videoHeight: 1080,
     frameRate: 30,
-    videoControls: [
-        'mute-audio',
-        'mute-video',
-        'full-screen',
-        'volume-slider',
-        'stop'
-    ]
+    videoControls: ['mute-audio','mute-video']
 });
 
 this function setup videoconnection
@@ -33,16 +27,17 @@ this function setup videoconnection
 
 # Button for join or open the room
 ```
-__openOrJoin('open-or-join-button-id-name');
+__openOrJoin('open-or-join-button-id');
 
 create any button and take the id
 ```
 
 ## Options
 
-about options:
-
-* *roomId* - any unique text (typeof string)
-* *videoContainer* - document.getElemenrtById('yourVideoContainer')
+* *roomId* - any unique id (typeof string)
+* *videoContainer* - take the HTML element | document.getElementById('elementId')
 * *isAudio* - true | false
 * *isVideo* - true | false
+* *videoControls* - 'mute-audio','mute-video','full-screen',
+                    'take-snapshot','record-audio','record-video',
+                    'volume-slider','stop'

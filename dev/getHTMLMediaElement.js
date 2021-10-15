@@ -111,7 +111,7 @@ function getHTMLMediaElement(mediaElement, config) {
                 if (mediaElementContainer.parentNode) {
                     mediaElementContainer.parentNode.removeChild(mediaElementContainer);
                 }
-            }, 800);
+            }, 200);
             if (config.onStopped) config.onStopped();
         };
     }
@@ -510,3 +510,9 @@ function getAudioElement(mediaElement, config) {
 
     return mediaElementContainer;
 }
+
+const _getHTMLMediaElement = getHTMLMediaElement;
+export { _getHTMLMediaElement as getHTMLMediaElement };
+
+const _getAudioElement = getAudioElement;
+export { _getAudioElement as getAudioElement }; 
