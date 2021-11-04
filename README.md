@@ -6,30 +6,55 @@ many to many video streaming
 
 `npm i mindalayvideostream --save`
 
-# Inital function
+# inital
 
 ```
-import { __InitConnection, __openOrJoin } from "mindalayvideostream"
+import { MindalayVideoConnection } from "mindalayvideostream";
+```
 
-__InitConnection({
+## *React*
+```
+<videoConnection 
+    roomId='roomid_123'
+    videoContainer= {document.getElementById("container")}
+    isAudio= {true}
+    isVideo ={true}
+    videoWidth= {1920}
+    videoHeight= {1080}
+    frameRate= {30}
+    videoControls={[ 'mute-audio', 'mute-video', 'full-screen'] } 
+/>
+```
+
+* *videoConnection component* 
+```
+const connection = new MindalayVideoConnection({
+    roomId, videoContainer, isAudio, isVideo, videoWidth, videoHeight, frameRate, videoControls
+});
+
+
+create any button and take the id
+
+useEffect(()=>{
+    connection.openOrJoin("open-or-join-room")
+},[connection])
+```
+## *JavaScript*
+```
+var connectin = new MindalayVideoConnection({
     roomId: 'roomid_123',
-    videoContainer: 'myVideoContainerInBody',
+    videoContainer: document.getElementById('container'),
     isAudio: true,
     isVideo: true,
     videoWidth: 1920,
     videoHeight: 1080,
     frameRate: 30,
-    videoControls: ['mute-audio','mute-video']
+    videoControls: [
+        'mute-audio', 'mute-video', 'full-screen'
+    ]
 });
 
-this function setup videoconnection
-```
-
-# Button for join or open the room
-```
-__openOrJoin('open-or-join-button-id');
-
-create any button and take the id
+connectin.openOrJoin('open-or-join-room');
 ```
 
 ## Options
