@@ -14,7 +14,7 @@ import { MindalayVideoConnection } from "mindalayvideostream";
 
 ## *React*
 ```
-<videoConnection 
+<VideoConnection 
     roomId='roomid_123'
     videoContainer= {document.getElementById("container")}
     isAudio= {true}
