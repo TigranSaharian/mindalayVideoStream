@@ -124,7 +124,7 @@ function getHTMLMediaElement(mediaElement, config) {
         mediaControls.appendChild(mediaControlWrapper);
 
         mediaControlWrapper.onclick = function() {
-            config.videosContainer.innerHTML = '';
+            config.container.innerHTML = '';
             // mediaElementContainer.style.opacity = 0;
             // setTimeout(function() {
             //     if (mediaElementContainer.parentNode) {
@@ -457,7 +457,7 @@ function getAudioElement(mediaElement, config) {
     mediaControls.appendChild(stop);
 
     stop.onclick = function() {
-        config.videosContainer.innerHTML = '';
+        config.container.innerHTML = '';
         // mediaElementContainer.style.opacity = 0;
         // setTimeout(function() {
         //     if (mediaElementContainer.parentNode) {
