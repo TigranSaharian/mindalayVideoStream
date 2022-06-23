@@ -3,7 +3,6 @@
 
 function getHTMLMediaElement(mediaElement, config) {
     config = config || {};
-
     if (!mediaElement.nodeName || (mediaElement.nodeName.toLowerCase() != 'audio' && mediaElement.nodeName.toLowerCase() != 'video')) {
         if (!mediaElement.getVideoTracks().length) {
             return getAudioElement(mediaElement, config);
@@ -42,25 +41,32 @@ function getHTMLMediaElement(mediaElement, config) {
     };
 
     var mediaElementContainer = document.createElement('div');
-    mediaElementContainer.className = 'media-container';
+    mediaElementContainer.className = 'vnd--media-container';
 
     var mediaControls = document.createElement('div');
     mediaControls.className = 'media-controls';
     mediaElementContainer.appendChild(mediaControls);
 
     if (buttons.has('mute-audio')) {
+        let mediaControlWrapper = document.createElement('div');
+        mediaControlWrapper.className = 'media-control-wrapper';
+
         var muteAudio = document.createElement('div');
         muteAudio.className = 'control ' + (config.toggle.has('mute-audio') ? 'unmute-audio selected' : 'mute-audio');
-        mediaControls.appendChild(muteAudio);
+        
+        mediaControlWrapper.appendChild(muteAudio);
+        mediaControls.appendChild(mediaControlWrapper);
 
-        muteAudio.onclick = function() {
+        mediaControlWrapper.onclick = function() {
             if (muteAudio.className.indexOf('unmute-audio') != -1) {
-                muteAudio.className = muteAudio.className.replace('unmute-audio selected', 'mute-audio');
+                mediaControlWrapper.classList.remove('selected'); // = mediaControlWrapper.className.replace('unmute-audio selected', 'mute-audio');
+                muteAudio.className = muteAudio.className.replace('unmute-audio', 'mute-audio');
                 mediaElement.muted = false;
                 mediaElement.volume = 1;
                 if (config.onUnMuted) config.onUnMuted('audio');
             } else {
-                muteAudio.className = muteAudio.className.replace('mute-audio', 'unmute-audio selected');
+                mediaControlWrapper.classList.add('selected');
+                muteAudio.className = muteAudio.className.replace('mute-audio', 'unmute-audio');
                 mediaElement.muted = true;
                 mediaElement.volume = 0;
                 if (config.onMuted) config.onMuted('audio');
@@ -69,19 +75,26 @@ function getHTMLMediaElement(mediaElement, config) {
     }
 
     if (buttons.has('mute-video')) {
+        let mediaControlWrapper = document.createElement('div');
+        mediaControlWrapper.className = 'media-control-wrapper';
+
         var muteVideo = document.createElement('div');
         muteVideo.className = 'control ' + (config.toggle.has('mute-video') ? 'unmute-video selected' : 'mute-video');
-        mediaControls.appendChild(muteVideo);
 
-        muteVideo.onclick = function() {
+        mediaControlWrapper.appendChild(muteVideo);
+        mediaControls.appendChild(mediaControlWrapper);
+
+        mediaControlWrapper.onclick = function() {
             if (muteVideo.className.indexOf('unmute-video') != -1) {
-                muteVideo.className = muteVideo.className.replace('unmute-video selected', 'mute-video');
+                mediaControlWrapper.classList.remove('selected');
+                muteVideo.className = muteVideo.className.replace('unmute-video', 'mute-video');
                 mediaElement.muted = false;
                 mediaElement.volume = 1;
                 mediaElement.play();
                 if (config.onUnMuted) config.onUnMuted('video');
             } else {
-                muteVideo.className = muteVideo.className.replace('mute-video', 'unmute-video selected');
+                mediaControlWrapper.classList.add('selected');
+                muteVideo.className = muteVideo.className.replace('mute-video', 'unmute-video');
                 mediaElement.muted = true;
                 mediaElement.volume = 0;
                 mediaElement.pause();
@@ -101,17 +114,23 @@ function getHTMLMediaElement(mediaElement, config) {
     }
 
     if (buttons.has('stop')) {
+        let mediaControlWrapper = document.createElement('div');
+        mediaControlWrapper.className = 'media-control-wrapper';
+        mediaControlWrapper.style.backgroundColor = '#cf000f'
+
         var stop = document.createElement('div');
         stop.className = 'control stop';
-        mediaControls.appendChild(stop);
+        mediaControlWrapper.appendChild(stop)
+        mediaControls.appendChild(mediaControlWrapper);
 
-        stop.onclick = function() {
-            mediaElementContainer.style.opacity = 0;
-            setTimeout(function() {
-                if (mediaElementContainer.parentNode) {
-                    mediaElementContainer.parentNode.removeChild(mediaElementContainer);
-                }
-            }, 200);
+        mediaControlWrapper.onclick = function() {
+            config.videosContainer.innerHTML = '';
+            // mediaElementContainer.style.opacity = 0;
+            // setTimeout(function() {
+            //     if (mediaElementContainer.parentNode) {
+            //         mediaElementContainer.parentNode.removeChild(mediaElementContainer);
+            //     }
+            // }, 200);
             if (config.onStopped) config.onStopped();
         };
     }
@@ -168,20 +187,26 @@ function getHTMLMediaElement(mediaElement, config) {
     }
 
     if (buttons.has('full-screen')) {
+        let mediaControlWrapper = document.createElement('div');
+        mediaControlWrapper.className = 'media-control-zoom-wrapper';
+
         var zoom = document.createElement('div');
-        zoom.className = 'control ' + (config.toggle.has('zoom-in') ? 'zoom-out selected' : 'zoom-in');
+        zoom.className = 'control ' + (config.toggle.has('zoom-in') ? 'zoom-out' : 'zoom-in');
+        mediaControlWrapper.appendChild(zoom);
 
         if (!slider && !recordAudio && !recordVideo && zoom) {
-            mediaControls.insertBefore(zoom, mediaControls.firstChild);
-        } else volumeControl.appendChild(zoom);
+            mediaControls.insertBefore(mediaControlWrapper, mediaControls.firstChild);
+        } else volumeControl.appendChild(mediaControlWrapper);
 
-        zoom.onclick = function() {
+        mediaControlWrapper.onclick = function() {
             if (zoom.className.indexOf('zoom-out') != -1) {
-                zoom.className = zoom.className.replace('zoom-out selected', 'zoom-in');
+                mediaControlWrapper.classList.remove('selected');
+                zoom.className = zoom.className.replace('zoom-out', 'zoom-in');
                 exitFullScreen();
             } else {
-                zoom.className = zoom.className.replace('zoom-in', 'zoom-out selected');
-                launchFullscreen(mediaElementContainer);
+                mediaControlWrapper.classList.add('selected')
+                zoom.className = zoom.className.replace('zoom-in', 'zoom-out');
+                launchFullscreen(mediaElementContainer.closest('.remote-stream'));
             }
         };
 
@@ -210,11 +235,14 @@ function getHTMLMediaElement(mediaElement, config) {
         }
 
         function screenStateChange(e) {
+            mediaElementContainer = mediaElementContainer.closest('.remote-stream');
             if (e.srcElement != mediaElementContainer) return;
 
             var isFullScreeMode = document.webkitIsFullScreen || document.mozFullScreen || document.fullscreen;
 
-            mediaElementContainer.style.width = (isFullScreeMode ? (window.innerWidth - 20) : config.width) + 'px';
+            if(isFullScreeMode) mediaElementContainer.style.width = window.innerWidth - 20 + 'px';
+            else  mediaElementContainer.style.width = config.width + 'px';
+            // mediaElementContainer.style.width = (isFullScreeMode ? (parent.innerWidth - 20) : config.width) + 'px';
             mediaElementContainer.style.display = isFullScreeMode ? 'block' : 'inline-block';
 
             if (config.height) {
@@ -225,10 +253,11 @@ function getHTMLMediaElement(mediaElement, config) {
             if (isFullScreeMode && config.onZoomin) config.onZoomin();
 
             if (!isFullScreeMode && zoom.className.indexOf('zoom-out') != -1) {
-                zoom.className = zoom.className.replace('zoom-out selected', 'zoom-in');
+                mediaControlWrapper.classList.remove('selected');
+                zoom.className = zoom.className.replace('zoom-out', 'zoom-in');
                 if (config.onZoomout) config.onZoomout();
             }
-            setTimeout(adjustControls, 1000);
+            // setTimeout(adjustControls, 1000);
         }
 
         document.addEventListener('fullscreenchange', screenStateChange, false);
@@ -237,7 +266,7 @@ function getHTMLMediaElement(mediaElement, config) {
     }
 
     if (buttons.has('volume-slider') || buttons.has('full-screen') || buttons.has('record-audio') || buttons.has('record-video')) {
-        mediaElementContainer.appendChild(volumeControl);
+        // mediaElementContainer.appendChild(volumeControl);
     }
 
     var mediaBox = document.createElement('div');
@@ -253,7 +282,7 @@ function getHTMLMediaElement(mediaElement, config) {
 
     mediaBox.appendChild(mediaElement);
 
-    if (!config.width) config.width = (innerWidth / 2) - 50;
+    // if (!config.width) config.width = (innerWidth / 2) - 50;
 
     mediaElementContainer.style.width = config.width + 'px';
 
@@ -261,7 +290,7 @@ function getHTMLMediaElement(mediaElement, config) {
         mediaBox.style.height = config.height + 'px';
     }
 
-    mediaBox.querySelector('video').style.maxHeight = innerHeight + 'px';
+    // mediaBox.querySelector('video').style.maxHeight = innerHeight + 'px';
 
     var times = 0;
 
@@ -287,7 +316,7 @@ function getHTMLMediaElement(mediaElement, config) {
 
     if (config.showOnMouseEnter || typeof config.showOnMouseEnter === 'undefined') {
         mediaElementContainer.onmouseenter = mediaElementContainer.onmousedown = function() {
-            adjustControls();
+            // adjustControls();
             mediaControls.style.opacity = 1;
             volumeControl.style.opacity = 1;
         };
@@ -298,7 +327,7 @@ function getHTMLMediaElement(mediaElement, config) {
         };
     } else {
         setTimeout(function() {
-            adjustControls();
+            // adjustControls();
             setTimeout(function() {
                 mediaControls.style.opacity = 1;
                 volumeControl.style.opacity = 1;
@@ -306,7 +335,7 @@ function getHTMLMediaElement(mediaElement, config) {
         }, 700);
     }
 
-    adjustControls();
+    // adjustControls();
 
     mediaElementContainer.toggle = function(clasName) {
         if (typeof clasName != 'string') {
@@ -331,7 +360,6 @@ function getHTMLMediaElement(mediaElement, config) {
 
     return mediaElementContainer;
 }
-
 // __________________
 // getAudioElement.js
 
@@ -363,7 +391,7 @@ function getAudioElement(mediaElement, config) {
     };
 
     var mediaElementContainer = document.createElement('div');
-    mediaElementContainer.className = 'media-container';
+    mediaElementContainer.className = 'vnd--media-container';
 
     var mediaControls = document.createElement('div');
     mediaControls.className = 'media-controls';
@@ -374,7 +402,6 @@ function getAudioElement(mediaElement, config) {
     mediaControls.appendChild(muteAudio);
 
     muteAudio.style['border-top-left-radius'] = '5px';
-
     muteAudio.onclick = function() {
         if (muteAudio.className.indexOf('unmute-audio') != -1) {
             muteAudio.className = muteAudio.className.replace('unmute-audio selected', 'mute-audio');
@@ -430,12 +457,13 @@ function getAudioElement(mediaElement, config) {
     mediaControls.appendChild(stop);
 
     stop.onclick = function() {
-        mediaElementContainer.style.opacity = 0;
-        setTimeout(function() {
-            if (mediaElementContainer.parentNode) {
-                mediaElementContainer.parentNode.removeChild(mediaElementContainer);
-            }
-        }, 800);
+        config.videosContainer.innerHTML = '';
+        // mediaElementContainer.style.opacity = 0;
+        // setTimeout(function() {
+        //     if (mediaElementContainer.parentNode) {
+        //         mediaElementContainer.parentNode.removeChild(mediaElementContainer);
+        //     }
+        // }, 800);
         if (config.onStopped) config.onStopped();
     };
 
