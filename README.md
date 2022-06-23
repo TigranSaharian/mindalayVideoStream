@@ -9,7 +9,7 @@ many to many video streaming
 # inital
 
 ```
-import { MindalayVideoConnection } from "mindalayvideostream";
+import { RtcConnection } from "mindalayvideostream";
 ```
 
 ## *React*
@@ -28,7 +28,7 @@ import { MindalayVideoConnection } from "mindalayvideostream";
 
 * *videoConnection component* 
 ```
-const connection = new MindalayVideoConnection({
+const connection = new RtcConnection({
     roomId, videoContainer, isAudio, isVideo, videoWidth, videoHeight, frameRate, videoControls
 });
 
@@ -41,7 +41,7 @@ useEffect(()=>{
 ```
 ## *JavaScript*
 ```
-var connectin = new MindalayVideoConnection({
+var connectin = new RtcConnection({
     roomId: 'roomid_123',
     videoContainer: document.getElementById('container'),
     isAudio: true,
