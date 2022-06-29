@@ -18,7 +18,7 @@
 .vnd--media-container {
     overflow: hidden;
     vertical-align: top;
-    background: #242424;
+    background: white;
 }
 
 .media-control-wrapper{
@@ -54,6 +54,18 @@
     background-position: center center;
     background-repeat: no-repeat;
     float: left;
+}
+
+.remote-stream.vnd--media-container{
+    height: auto;
+    position: absolute;
+    right: 10px;
+    bottom: 105px;
+    z-index: 100;
+}
+
+.vnd--media-container video{
+    border-radius: var(--vnd-border-radius);
 }
 
 .media-control-wrapper:active, .media-control-wrapper.selected, .volume-control .control:active {
