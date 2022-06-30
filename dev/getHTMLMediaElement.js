@@ -127,13 +127,9 @@ function getHTMLMediaElement(mediaElement, config) {
 
         mediaControlWrapper.onclick = function() {
             config.container.innerHTML = '';
-            // mediaElementContainer.style.opacity = 0;
-            // setTimeout(function() {
-            //     if (mediaElementContainer.parentNode) {
-            //         mediaElementContainer.parentNode.removeChild(mediaElementContainer);
-            //     }
-            // }, 200);
-            if (config.onStopped) config.onStopped();
+
+            if (config.stopScreenShare) config.stopScreenShare();
+            if (config.onStope) config.stopStream();
         };
     }
 
@@ -454,7 +450,7 @@ function getAudioElement(mediaElement, config) {
         
         stopControlWrapper.onclick = function() {
             config.container.innerHTML = '';;
-            if (config.onStopped) config.onStopped();
+            if (config.onStope) config.stopStream();
         };
 
         if (config.showOnMouseEnter || typeof config.showOnMouseEnter === 'undefined') {
