@@ -127,7 +127,7 @@ function getHTMLMediaElement(mediaElement, config) {
 
         mediaControlWrapper.onclick = function() {
             config.container.innerHTML = '';
-            if (config.onStope) config.stop();
+            if (config.onStope) config.onStope();
         };
     }
 
