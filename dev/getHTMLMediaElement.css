@@ -19,6 +19,7 @@
     overflow: hidden;
     vertical-align: top;
     background: #242424;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 }
 
 .media-control-wrapper{
