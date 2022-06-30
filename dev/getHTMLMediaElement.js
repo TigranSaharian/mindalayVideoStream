@@ -453,7 +453,7 @@ function getAudioElement(mediaElement, config) {
         mediaControls.appendChild(stopControlWrapper);
         
         stopControlWrapper.onclick = function() {
-            parent.document.getElementById('vndStreamContainer').remove();
+            config.container.innerHTML = '';;
             if (config.onStopped) config.onStopped();
         };
 
