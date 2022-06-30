@@ -387,6 +387,11 @@ function getAudioElement(mediaElement, config) {
         }
     }
 
+    var buttons = config.buttons || ['mute-audio', 'volume-slider', 'stop'];
+    buttons.has = function(element) {
+        return buttons.indexOf(element) !== -1;
+    };
+
     config.toggle = config.toggle || [];
     config.toggle.has = function(element) {
         return config.toggle.indexOf(element) !== -1;
@@ -438,44 +443,17 @@ function getAudioElement(mediaElement, config) {
             };
         }
     
-        // var volumeSlider = document.createElement('div');
-        // volumeSlider.className = 'control volume-slider';
-        // volumeSlider.style.width = 'auto';
-        // mediaControls.appendChild(volumeSlider);
-    
-        // var slider = document.createElement('input');
-        // slider.style.marginTop = '11px';
-        // slider.style.width = ' 200px';
-    
-        // if (config.buttons && config.buttons.indexOf('record-audio') == -1) {
-        //     slider.style.width = ' 241px';
-        // }
-    
-        // slider.type = 'range';
-        // slider.min = 0;
-        // slider.max = 100;
-        // slider.value = 100;
-        // slider.onchange = function() {
-        //     mediaElement.volume = '.' + slider.value.toString().substr(0, 1);
-        // };
-        // volumeSlider.appendChild(slider);
         let stopControlWrapper = document.createElement('div');
         stopControlWrapper.className = 'media-control-wrapper';
         stopControlWrapper.style.backgroundColor = '#cf000f'
-    
+        
         var stop = document.createElement('div');
         stop.className = 'control stop';
-        mediaControls.appendChild(stop);
+        stopControlWrapper.appendChild(stop)
         mediaControls.appendChild(stopControlWrapper);
-    
+        
         stopControlWrapper.onclick = function() {
-            config.container.innerHTML = '';
-            // mediaElementContainer.style.opacity = 0;
-            // setTimeout(function() {
-            //     if (mediaElementContainer.parentNode) {
-            //         mediaElementContainer.parentNode.removeChild(mediaElementContainer);
-            //     }
-            // }, 800);
+            parent.document.getElementById('vndStreamContainer').remove();
             if (config.onStopped) config.onStopped();
         };
 
@@ -496,32 +474,18 @@ function getAudioElement(mediaElement, config) {
                 }, 300);
             }, 700);
         }
-    
-        // stop.style['border-top-right-radius'] = '5px';
-        // stop.style['border-bottom-right-radius'] = '5px';
-    
+        
         var mediaBox = document.createElement('div');
         mediaBox.className = 'media-box';
-        mediaBox.style.height = '53px'; // 90px
+        mediaBox.style.height = '53px';
         mediaElement.style.display = 'none';
         mediaElement.style.opacity = 0;
         mediaElementContainer.appendChild(mediaBox);
         mediaBox.appendChild(mediaElement);
     }
 
-    // var h2 = document.createElement('h2');
-    // h2.innerHTML = config.title || 'Audio Element';
-    // h2.setAttribute('style', 'position: absolute;color: rgb(160, 160, 160);font-size: 20px;text-shadow: 1px 1px rgb(255, 255, 255);padding:0;margin:0;');
-    // mediaBox.appendChild(h2);
-
-
     mediaElementContainer.style.width = '95px';
     mediaElementContainer.style.borderRadius = '20px';
-    // mediaElementContainer.style.width = '329px';
-
-    // h2.style.width = mediaElementContainer.style.width;
-    // h2.style.height = '50px';
-    // h2.style.overflow = 'hidden';
 
     var times = 0;
 
@@ -533,7 +497,6 @@ function getAudioElement(mediaElement, config) {
             setTimeout(adjustControls, 1000);
         } else times = 0;
     }
-    
     //adjustControls();
 
     mediaElementContainer.toggle = function(clasName) {
@@ -552,7 +515,6 @@ function getAudioElement(mediaElement, config) {
     };
 
     mediaElementContainer.media = mediaElement;
-
     return mediaElementContainer;
 }
 
