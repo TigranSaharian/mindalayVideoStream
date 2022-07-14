@@ -449,7 +449,7 @@ function getAudioElement(mediaElement, config) {
         
         stopControlWrapper.onclick = function() {
             config.container.innerHTML = '';;
-            if (config.onStope) config.stopStream();
+            if (config.onStope) config.onStope();
         };
 
         if (config.showOnMouseEnter || typeof config.showOnMouseEnter === 'undefined') {
