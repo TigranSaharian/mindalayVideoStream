@@ -4,7 +4,6 @@
 function getHTMLMediaElement(mediaElement, config) {
     config = config || {};
 
-    console.log(mediaElement.nodeName, config.type);
     if (!mediaElement.nodeName || (mediaElement.nodeName.toLowerCase() != 'audio' && mediaElement.nodeName.toLowerCase() != 'video')) {
         if (!mediaElement.getVideoTracks().length) {
             return getAudioElement(mediaElement, config);
