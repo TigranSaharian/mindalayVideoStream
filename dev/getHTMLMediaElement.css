@@ -60,8 +60,8 @@
 .remote-stream.vnd--media-container{
     height: auto;
     position: absolute;
-    right: 15px;
-    bottom: 110px;
+    right: 20px;
+    bottom: 20px;
     z-index: 100;
     border-radius: 10px;
 }
