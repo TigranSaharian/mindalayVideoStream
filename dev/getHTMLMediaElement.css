@@ -33,7 +33,6 @@
 .media-control-zoom-wrapper{
     background-color: #ffffffa6;
     border-radius: 50%;
-    margin: 0 2.5px;
     padding: 7px;
     cursor: pointer;
 }
@@ -47,6 +46,8 @@
     transform: translateX(-50%);
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
 .media-controls .control, .volume-control .control {
@@ -64,10 +65,12 @@
     bottom: 20px;
     z-index: 100;
     border-radius: 10px;
+    padding: 10px;
+    padding-bottom: 55px;
 }
 
 .vnd--media-container video{
-    border-radius: var(--vnd-border-radius);
+    border-radius: 5px;
 }
 
 .media-control-wrapper:active, .media-control-wrapper.selected, .volume-control .control:active {
