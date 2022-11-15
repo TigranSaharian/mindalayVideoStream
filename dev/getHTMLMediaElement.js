@@ -117,7 +117,8 @@ function getHTMLMediaElement(mediaElement, config) {
     if (buttons.has('stop')) {
         let mediaControlWrapper = document.createElement('div');
         mediaControlWrapper.className = 'media-control-wrapper';
-        mediaControlWrapper.style.backgroundColor = '#cf000f'
+        mediaControlWrapper.style.backgroundColor = '#cf000f';
+        mediaControlWrapper.id = 'vnd_stop_stream';
 
         var stop = document.createElement('div');
         stop.className = 'control stop';
@@ -126,7 +127,7 @@ function getHTMLMediaElement(mediaElement, config) {
 
         mediaControlWrapper.onclick = function() {
             config.container.innerHTML = '';
-            if (config.isScreenShare && config.onStopClientScreenShare) config.onStopClientScreenShare();
+            // if (config.isScreenShare && config.onStopClientScreenShare) config.onStopClientScreenShare();
             if (config.onStope) config.onStope();
         };
     }
@@ -439,8 +440,9 @@ function getAudioElement(mediaElement, config) {
     
         let stopControlWrapper = document.createElement('div');
         stopControlWrapper.className = 'media-control-wrapper';
-        stopControlWrapper.style.backgroundColor = '#cf000f'
-        
+        stopControlWrapper.style.backgroundColor = '#cf000f';
+        stopControlWrapper.id = 'vnd_stop_stream';
+
         var stop = document.createElement('div');
         stop.className = 'control stop';
         stopControlWrapper.appendChild(stop)
