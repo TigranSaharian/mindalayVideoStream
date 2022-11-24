@@ -1,6 +1,6 @@
 {
   "name": "mindalayvideostream",
-  "version": "1.6.9",
+  "version": "1.6.8",
   "description": "many to many video streaming using WebRTC technology",
   "main": "index.js",
   "scripts": {
